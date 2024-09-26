@@ -13,8 +13,8 @@ for model_name in model_names:
         models[model_name] = pickle.load(file)
 
 # Khởi tạo scaler và lấy giá trị mean và std từ mô hình đã huấn luyện
-# with open('scaler.pkl', 'rb') as file:
-#     scaler = pickle.load(file)
+with open('scaler', 'rb') as file:
+    scaler = pickle.load(file)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -39,9 +39,10 @@ def index():
         selected_model = request.form['model']
 
         input_data = np.array([[squareMeters, numbeOfRoom, hasYard, hasPool, floors, cityCode, cityPartRange, numPrevOwners, made, isNewBuilt, hasStormProtector, basement, attic, garage, hasStorageRoom, hasGuestRoom]])
+        input_data_scaled = scaler.transform(input_data)
 
         # Dự đoán với mô hình đã chọn
-        prediction = models[selected_model].predict(input_data)[0]
+        prediction = models[selected_model].predict(input_data_scaled)[0]
 
 
     return render_template('index.html', prediction=prediction, model_names=model_names)
