@@ -201,6 +201,29 @@
         {% if prediction is not none %}
             <h2>Dự đoán Giá Nhà: {{ prediction }}</h2>
         {% endif %}
+
+        <script>
+            document.getElementById('predictionForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // Ngăn tải lại trang khi nhấn nút submit
+                
+                // Lấy dữ liệu từ form
+                const formData = new FormData(this);
+    
+                // Gửi dữ liệu form qua AJAX
+                fetch('/predict', { // Đường dẫn '/predict' là ví dụ, bạn thay bằng API của bạn
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json()) // Chuyển đổi phản hồi thành JSON
+                .then(data => {
+                    // Hiển thị kết quả dự đoán trên giao diện
+                    document.getElementById('result').textContent = Dự đoán Giá Nhà: ${data.prediction};
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        </script>
     </div>
 </body>
 </html>
