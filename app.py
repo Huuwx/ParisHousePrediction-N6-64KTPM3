@@ -36,9 +36,10 @@ def index():
         garage = float(request.form['garage'])
         hasStorageRoom = float(request.form['hasStorageRoom'])
         hasGuestRoom = float(request.form['hasGuestRoom'])
+        category = float(request.form['category'])
         selected_model = request.form['model']
 
-        input_data = np.array([[squareMeters, numbeOfRoom, hasYard, hasPool, floors, cityCode, cityPartRange, numPrevOwners, made, isNewBuilt, hasStormProtector, basement, attic, garage, hasStorageRoom, hasGuestRoom]])
+        input_data = np.array([[squareMeters, numbeOfRoom, hasYard, hasPool, floors, cityCode, cityPartRange, numPrevOwners, made, isNewBuilt, hasStormProtector, basement, attic, garage, hasStorageRoom, hasGuestRoom, category]])
         input_data_scaled = scaler.transform(input_data)
 
         # Dự đoán với mô hình đã chọn
